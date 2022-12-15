@@ -1,0 +1,16 @@
+sudo: required
+
+services:
+    - docker
+
+before_install:
+    - docker build -t harish2000/loginapp .
+
+script:
+    - docker run harish2000/loginapp npm test
+
+after_success:
+    - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_ID" --password-stdin
+
+    - docker push harish2000/loginapp
+
